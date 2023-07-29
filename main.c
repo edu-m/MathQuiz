@@ -100,7 +100,8 @@ int main(int argc, char **argv) {
     printf("%d %c %d\n> ", n1, op, n2);
     parse_input(s, p, &input);
     result = fx[get_value(op)](n1, n2);
-    if (correct_answers += input == result) {
+    if (input == result) {
+      ++correct_answers;
       print_c(GREEN, "Correct!\n");
     } else
       print_c(RED, "Result is %d. Try again!\n", result);
