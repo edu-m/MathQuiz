@@ -74,13 +74,15 @@ void parse_args(int argc, char **argv, int *q_amt) {
   for (int i = 1; i < argc; i++) {
     if (*argv[i] != '-')
       continue;
-    if (*(argv[i] + 1) == 'c') {
-      if ((user_amt = atoi(argv[i] + 2)) > 0)
-        *q_amt = user_amt;
-      else
-        die("Invalid value. Please insert a value greater than zero.");
-    }
+    if (*(argv[i] + 1) == 'c' && (user_amt = atoi(argv[i] + 2)) > 0)
+      *q_amt = user_amt;
+    else
+      die("Invalid value. Please insert a value greater than zero.");
   }
+}
+
+int compare(const long *input, const long *result) {
+  return (*input == *result);
 }
 
 int main(int argc, char **argv) {
@@ -100,11 +102,10 @@ int main(int argc, char **argv) {
     printf("%d %c %d\n> ", n1, op, n2);
     parse_input(s, p, &input);
     result = fx[get_value(op)](n1, n2);
-    if (input == result) {
-      ++correct_answers;
-      print_c(GREEN, "Correct!\n");
-    } else
-      print_c(RED, "Result is %d. Try again!\n", result);
+
+    ((correct_answers += compare(&input, (long *)&result))
+         ? print_c(GREEN, "Correct!\n")
+         : print_c(RED, "Result is %d. Try again!\n", result));
   }
   printf("\a\aYou scored %d out of %d! (%1.f\%)\n", correct_answers, q_amt_copy,
          ((correct_answers * 100) / (float)(q_amt_copy)));
