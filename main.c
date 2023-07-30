@@ -11,10 +11,10 @@
 #define BLUE 'b'
 #define YELLOW 'y'
 
-int add(int x, int y) { return x + y; }
-int mul(int x, int y) { return x * y; }
-int sub(int x, int y) { return x - y; }
-int divide(int x, int y) { return x / y; }
+static int add(const int *x, const int *y) { return *x + *y; }
+static int mul(const int *x, const int *y) { return *x * *y; }
+static int sub(const int *x, const int *y) { return *x - *y; }
+static int divide(const int *x, const int *y) { return *x / *y; }
 
 static void die(const char *fmt, ...)
 {
@@ -57,9 +57,7 @@ void parse_input(char *s, char *p,
   {
     *input = strtol(s, &p, 10);
     if (p == s || *p != '\n')
-    {
       printf("Please enter an integer: ");
-    }
     else
       break;
   }
@@ -101,10 +99,7 @@ void parse_args(int argc, char **argv, int *q_amt)
 
 int compare(const int *input, const int *result) { return (*input == *result); }
 
-void print_score(const int *correct_answers)
-{
-  print_c(BLUE, "Correct Answers: %d\n", *correct_answers);
-}
+void print_score(const int *correct_answers) { print_c(BLUE, "Correct Answers: %d\n", *correct_answers); }
 
 void handle_input_correct(int *correct_answers, const int *result)
 {
@@ -124,7 +119,7 @@ int main(int argc, char **argv)
   srand(time(NULL));
   banner();
   char ops[4] = {'*', '+', '-', '/'};
-  int (*fx[4])(int, int) = {add, mul, sub, divide};
+  int (*fx[4])(const int *, const int *) = {add, mul, sub, divide};
   void (*handle_outcomes[2])(int *, const int *) = {handle_input_wrong,
                                                     handle_input_correct};
   int n1, n2, result, q_amt;
@@ -139,11 +134,10 @@ int main(int argc, char **argv)
     op_gen(&op, ops, &n1, &n2);
     printf("%d %c %d\n> ", n1, op, n2);
     parse_input(s, p, &input);
-    result = fx[get_value(op)](n1, n2);
-
+    result = fx[get_value(op)](&n1, &n2);
     handle_outcomes[compare((int *)&input, &result)](&correct_answers, &result);
   }
-  printf("\a\aYou scored %d out of %d! (%1.f%%)\n", correct_answers, q_amt_copy,
-         ((correct_answers * 100) / (float)(q_amt_copy)));
+  printf("\a\aYou scored %d out of %d! (%d%%)\n", correct_answers, q_amt_copy,
+         (correct_answers * 100 / q_amt_copy));
   return 0;
 }
