@@ -12,7 +12,7 @@ MAKEFLAGS += -j$(NUM_THREADS)
 all: $(TARGET)
 
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET).out
 
 .PHONY: clean
 
