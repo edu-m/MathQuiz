@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
     parse_input(s, p, &input);
     if ((value = get_value(&op)) == -1)
       die("An error has occured and the application was shut down.");
-    result = fx[get_value(&op)](&n1, &n2);
+    result = fx[value](&n1, &n2);
     handle_outcomes[compare((int *)&input, &result)](&correct_answers, &result);
   }
   printf("\a\aYou scored %d out of %d! (%d%%)\n", correct_answers, q_amt_copy,
