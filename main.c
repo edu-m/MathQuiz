@@ -50,7 +50,7 @@ void parse_input(char *s, char *p,
                  long *input) { // parse the input to ignore all non-integers
   while (fgets(s, MAX_INPUT_SIZE, stdin)) {
     *input = strtol(s, &p, 10);
-    if (strlen(s) >= MAX_LONG_LENGTH || (p == s || *p != '\n')) // 10 characters
+    if (strlen(s) - 1 >= MAX_LONG_LENGTH || (p == s || *p != '\n')) // input is a long, thus MAX_LONG_LENGTH is 19 characters
       printf("Please enter a valid integer: ");
     else
       break;
