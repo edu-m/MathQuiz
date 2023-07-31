@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #define MAX_NUM 24
 #define MAX_INPUT_SIZE 64
 #define MAIN_LOOP while (q_amt-- > 0)
+#define MAX_LONG_LENGTH 19
 #define RED 'r'
 #define GREEN 'y'
 #define BLUE 'b'
@@ -46,10 +48,9 @@ int get_value(const char *op) {
 
 void parse_input(char *s, char *p,
                  long *input) { // parse the input to ignore all non-integers
-  // printf("%lu", strlen(s));
   while (fgets(s, MAX_INPUT_SIZE, stdin)) {
     *input = strtol(s, &p, 10);
-    if (strlen(s) >= 10 || (p == s || *p != '\n'))
+    if (strlen(s) >= MAX_LONG_LENGTH || (p == s || *p != '\n')) // 10 characters
       printf("Please enter a valid integer: ");
     else
       break;

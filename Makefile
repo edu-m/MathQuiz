@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O2
+CFLAGS = -Ofast
 TARGET = mathquiz
 SRCS = main.c color.c
 
