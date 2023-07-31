@@ -4,17 +4,17 @@
 #include <string.h>
 #include <time.h>
 #define MAX_NUM 24
-#define MAX_INPUT_SIZE 4
+#define MAX_INPUT_SIZE 64
 #define MAIN_LOOP while (q_amt-- > 0)
 #define RED 'r'
 #define GREEN 'y'
 #define BLUE 'b'
 #define YELLOW 'y'
 
-static int add(const int *x, const int *y) { return *x + *y; }
-static int mul(const int *x, const int *y) { return *x * *y; }
-static int sub(const int *x, const int *y) { return *x - *y; }
-static int divide(const int *x, const int *y) { return *x / *y; }
+static int _add(const int *x, const int *y) { return *x + *y; }
+static int _mul(const int *x, const int *y) { return *x * *y; }
+static int _sub(const int *x, const int *y) { return *x - *y; }
+static int _div(const int *x, const int *y) { return *x / *y; }
 
 static void die(const char *fmt, ...) {
   va_list argp;
@@ -46,10 +46,11 @@ int get_value(const char *op) {
 
 void parse_input(char *s, char *p,
                  long *input) { // parse the input to ignore all non-integers
-  while (fgets(s, sizeof(s), stdin)) {
+  // printf("%lu", strlen(s));
+  while (fgets(s, MAX_INPUT_SIZE, stdin)) {
     *input = strtol(s, &p, 10);
-    if (p == s || *p != '\n')
-      printf("Please enter an integer: ");
+    if (strlen(s) >= 10 || (p == s || *p != '\n'))
+      printf("Please enter a valid integer: ");
     else
       break;
   }
@@ -106,7 +107,7 @@ int main(int argc, char **argv) {
   srand(time(NULL));
   banner();
   char ops[4] = {'*', '+', '-', '/'};
-  int (*fx[4])(const int *, const int *) = {add, mul, sub, divide};
+  int (*fx[4])(const int *, const int *) = {_add, _mul, _sub, _div};
   void (*handle_outcomes[2])(int *, const int *) = {handle_input_wrong,
                                                     handle_input_correct};
   int n1, n2, result, q_amt;
