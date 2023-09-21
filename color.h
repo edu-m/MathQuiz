@@ -3,6 +3,10 @@
 #pragma once
 #include <stdarg.h>
 #include <stdio.h>
+#define RED 'r'
+#define GREEN 'y'
+#define BLUE 'b'
+#define YELLOW 'y'
 
 void red();
 

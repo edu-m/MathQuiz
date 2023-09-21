@@ -8,10 +8,6 @@
 #define MAX_INPUT_SIZE 64
 #define MAIN_LOOP while (q_amt-- > 0)
 #define MAX_LONG_LENGTH 19
-#define RED 'r'
-#define GREEN 'y'
-#define BLUE 'b'
-#define YELLOW 'y'
 
 static int _add(const int *x, const int *y) { return *x + *y; }
 static int _mul(const int *x, const int *y) { return *x * *y; }
