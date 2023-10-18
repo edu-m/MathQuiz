@@ -58,7 +58,7 @@ void op_gen(char *op, char *ops, int *n1, int *n2) {
   *n1 = rand() % MAX_NUM + 1;
   // generates a "friendlier" set of numbers
   // to compute when division occurs so that
-  // there will always an integer division
+  // there will always be an integer division
   // with lowish numbers in the denominator
   *n1 += (*op == '/' && *n1 % 2 != 0);
   if (*op == '/')
